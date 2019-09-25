@@ -38,6 +38,7 @@ namespace BudgetingApp.Controllers
         // GET: Planners/Create
         public ActionResult Create()
         {
+            Planner planner = new Planner();
             return View();
         }
 
@@ -46,7 +47,7 @@ namespace BudgetingApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FirstName,LastName,EmailAddress,Budget")] Planner planner)
+        public ActionResult Create([Bind(Include = "FirstName,LastName,EmailAddress,Budget,ApplicationUserId")] Planner planner)
         {
             if (ModelState.IsValid)
             {
@@ -78,13 +79,13 @@ namespace BudgetingApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FirstName,LastName,EmailAddress,Budget")] Planner planner)
+        public ActionResult Edit([Bind(Include = "FirstName,LastName,EmailAddress,Budget,ApplicationUserId")] Planner planner)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(planner).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Planners");
             }
             return View(planner);
         }
@@ -112,7 +113,7 @@ namespace BudgetingApp.Controllers
             Planner planner = db.Planners.Find(id);
             db.Planners.Remove(planner);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Planners");
         }
 
         protected override void Dispose(bool disposing)

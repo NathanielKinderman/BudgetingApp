@@ -17,6 +17,7 @@ namespace BudgetingApp.Controllers
         // GET: PartyMembers
         public ActionResult Index()
         {
+            
             return View(db.PartyMembers.ToList());
         }
 
@@ -38,6 +39,7 @@ namespace BudgetingApp.Controllers
         // GET: PartyMembers/Create
         public ActionResult Create()
         {
+            PartyMember partyMember = new PartyMember();
             return View();
         }
 
@@ -46,7 +48,7 @@ namespace BudgetingApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FirstName,LastName,EmailAddress,PersonalBudget")] PartyMember partyMember)
+        public ActionResult Create([Bind(Include = "FirstName,LastName,EmailAddress,PersonalBudget,ApplicationUserId")] PartyMember partyMember)
         {
             if (ModelState.IsValid)
             {
@@ -78,13 +80,13 @@ namespace BudgetingApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FirstName,LastName,EmailAddress,PersonalBudget")] PartyMember partyMember)
+        public ActionResult Edit([Bind(Include = "FirstName,LastName,EmailAddress,PersonalBudget,ApplicationUserId")] PartyMember partyMember)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(partyMember).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","PartyMembers");
             }
             return View(partyMember);
         }
@@ -112,7 +114,7 @@ namespace BudgetingApp.Controllers
             PartyMember partyMember = db.PartyMembers.Find(id);
             db.PartyMembers.Remove(partyMember);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","PartyMembers");
         }
 
         protected override void Dispose(bool disposing)

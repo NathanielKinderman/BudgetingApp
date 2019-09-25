@@ -22,20 +22,45 @@ namespace BudgetingApp
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
+            {
+
+                // first we create Admin rool   
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Admin";
+                roleManager.Create(role);
+
+                //Here we create a Admin super user who will maintain the website                  
+
+                var user = new ApplicationUser();
+                user.UserName = " ";
+                user.Email = " ";
+
+                string userPWD = " ";
+
+                var chkUser = UserManager.Create(user, userPWD);
+
+                //Add default User to Role Admin   
+                if (chkUser.Succeeded)
+                {
+                    var result1 = UserManager.AddToRole(user.Id, "Admin");
+
+                }
+            }       
+                                                         
             // creating Creating Manager role    
-            if (!roleManager.RoleExists("Planners"))
+            if (!roleManager.RoleExists("Planner"))
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Planners";
+                role.Name = "Planner";
                 roleManager.Create(role);
 
             }
 
             // creating Creating Employee role    
-            if (!roleManager.RoleExists("PartyMembers"))
+            if (!roleManager.RoleExists("PartyMember"))
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "PartyMemebers";
+                role.Name = "PartyMemeber";
                 roleManager.Create(role);
 
             }

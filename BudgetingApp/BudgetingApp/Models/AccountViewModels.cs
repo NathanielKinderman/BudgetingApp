@@ -66,7 +66,7 @@ namespace BudgetingApp.Models
     {
         [Required]
         [Display(Name = "UserRoles")]
-        public string UserRoles { get; set; }
+        public string Role { get; set; }
 
         [Required]
         [EmailAddress]

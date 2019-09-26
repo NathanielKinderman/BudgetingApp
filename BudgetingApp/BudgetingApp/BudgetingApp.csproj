@@ -168,15 +168,24 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CreateEventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MadeActivitesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PartyMembersController.cs" />
     <Compile Include="Controllers\PlannersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909261947133_UpdatedForeignKey.cs" />
+    <Compile Include="Migrations\201909261947133_UpdatedForeignKey.Designer.cs">
+      <DependentUpon>201909261947133_UpdatedForeignKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CreateEvent.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\MadeActivites.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PartyMember.cs" />
     <Compile Include="Models\Planner.cs" />
@@ -249,6 +258,16 @@
     <Content Include="Views\PartyMembers\Details.cshtml" />
     <Content Include="Views\PartyMembers\Edit.cshtml" />
     <Content Include="Views\PartyMembers\Index.cshtml" />
+    <Content Include="Views\MadeActivites\Create.cshtml" />
+    <Content Include="Views\MadeActivites\Delete.cshtml" />
+    <Content Include="Views\MadeActivites\Details.cshtml" />
+    <Content Include="Views\MadeActivites\Edit.cshtml" />
+    <Content Include="Views\MadeActivites\Index.cshtml" />
+    <Content Include="Views\CreateEvents\Create.cshtml" />
+    <Content Include="Views\CreateEvents\Delete.cshtml" />
+    <Content Include="Views\CreateEvents\Details.cshtml" />
+    <Content Include="Views\CreateEvents\Edit.cshtml" />
+    <Content Include="Views\CreateEvents\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -265,6 +284,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201909261947133_UpdatedForeignKey.resx">
+      <DependentUpon>201909261947133_UpdatedForeignKey.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

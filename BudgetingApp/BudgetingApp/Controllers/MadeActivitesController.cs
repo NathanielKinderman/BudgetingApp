@@ -10,110 +10,110 @@ using BudgetingApp.Models;
 
 namespace BudgetingApp.Controllers
 {
-    public class PlannersController : Controller
+    public class MadeActivitesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Planners
+        // GET: MadeActivites
         public ActionResult Index()
         {
-            return View(db.Planners.ToList());
+            return View(db.MadeActivites.ToList());
         }
 
-        // GET: Planners/Details/5
+        // GET: MadeActivites/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Planner planner = db.Planners.Find(id);
-            if (planner == null)
+            MadeActivites madeActivites = db.MadeActivites.Find(id);
+            if (madeActivites == null)
             {
                 return HttpNotFound();
             }
-            return View(planner);
+            return View(madeActivites);
         }
 
-        // GET: Planners/Create
+        // GET: MadeActivites/Create
         public ActionResult Create()
         {
-            Planner planner = new Planner();
+            MadeActivites madeActivites = new MadeActivites();
             return View();
         }
 
-        // POST: Planners/Create
+        // POST: MadeActivites/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FirstName,LastName,EmailAddress,Budget,ApplicationUserId")] Planner planner)
+        public ActionResult Create([Bind(Include = "NameOfActivity,LocationOfActivity,TimeOfActivity,HowManyMembersInvolved,EstimatedCostOfActivity")] MadeActivites madeActivites)
         {
             if (ModelState.IsValid)
             {
-                db.Planners.Add(planner);
+                db.MadeActivites.Add(madeActivites);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(planner);
+            return View(madeActivites);
         }
 
-        // GET: Planners/Edit/5
+        // GET: MadeActivites/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Planner planner = db.Planners.Find(id);
-            if (planner == null)
+            MadeActivites madeActivites = db.MadeActivites.Find(id);
+            if (madeActivites == null)
             {
                 return HttpNotFound();
             }
-            return View(planner);
+            return View(madeActivites);
         }
 
-        // POST: Planners/Edit/5
+        // POST: MadeActivites/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FirstName,LastName,EmailAddress,Budget,ApplicationUserId")] Planner planner)
+        public ActionResult Edit([Bind(Include = "NameOfActivity,LocationOfActivity,TimeOfActivity,HowManyMembersInvolved,EstimatedCostOfActivity")] MadeActivites madeActivites)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(planner).State = EntityState.Modified;
+                db.Entry(madeActivites).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", "Planners");
+                return RedirectToAction("Index");
             }
-            return View(planner);
+            return View(madeActivites);
         }
 
-        // GET: Planners/Delete/5
+        // GET: MadeActivites/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Planner planner = db.Planners.Find(id);
-            if (planner == null)
+            MadeActivites madeActivites = db.MadeActivites.Find(id);
+            if (madeActivites == null)
             {
                 return HttpNotFound();
             }
-            return View(planner);
+            return View(madeActivites);
         }
 
-        // POST: Planners/Delete/5
+        // POST: MadeActivites/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Planner planner = db.Planners.Find(id);
-            db.Planners.Remove(planner);
+            MadeActivites madeActivites = db.MadeActivites.Find(id);
+            db.MadeActivites.Remove(madeActivites);
             db.SaveChanges();
-            return RedirectToAction("Index", "Planners");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -124,6 +124,5 @@ namespace BudgetingApp.Controllers
             }
             base.Dispose(disposing);
         }
-
-    }   
+    }
 }

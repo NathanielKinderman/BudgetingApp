@@ -14,7 +14,7 @@ namespace BudgetingApp.Models
         public string FirstName { get; set; }
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [Display(Name = "EMail Address")]
+        [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
         [Display(Name ="Personal Budget for the Event")]
         public string PersonalBudget { get; set; }

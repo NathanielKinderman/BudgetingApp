@@ -10,110 +10,116 @@ using BudgetingApp.Models;
 
 namespace BudgetingApp.Controllers
 {
-    public class PlannersController : Controller
+    public class CreateEventsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Planners
+        // GET: CreateEvents
         public ActionResult Index()
         {
-            return View(db.Planners.ToList());
+            
+            var createEvents = db.CreateEvents.Include(c => c.Planner);
+            return View(createEvents.ToList());
         }
 
-        // GET: Planners/Details/5
+        // GET: CreateEvents/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Planner planner = db.Planners.Find(id);
-            if (planner == null)
+            CreateEvent createEvent = db.CreateEvents.Find(id);
+            if (createEvent == null)
             {
                 return HttpNotFound();
             }
-            return View(planner);
+            return View(createEvent);
         }
 
-        // GET: Planners/Create
+        // GET: CreateEvents/Create
         public ActionResult Create()
         {
-            Planner planner = new Planner();
+            CreateEvent createEvent = new CreateEvent();
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email");
             return View();
         }
 
-        // POST: Planners/Create
+        // POST: CreateEvents/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FirstName,LastName,EmailAddress,Budget,ApplicationUserId")] Planner planner)
+        public ActionResult Create([Bind(Include = "EventsName,City,DateOfEvent,NumberOfMembers,TheBudgetOfEvent,ApplicationUserId")] CreateEvent createEvent)
         {
             if (ModelState.IsValid)
             {
-                db.Planners.Add(planner);
+                db.CreateEvents.Add(createEvent);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(planner);
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", createEvent.PlannerId);
+            return View(createEvent);
         }
 
-        // GET: Planners/Edit/5
+        // GET: CreateEvents/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Planner planner = db.Planners.Find(id);
-            if (planner == null)
+            CreateEvent createEvent = db.CreateEvents.Find(id);
+            if (createEvent == null)
             {
                 return HttpNotFound();
             }
-            return View(planner);
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", createEvent.PlannerId);
+            return View(createEvent);
         }
 
-        // POST: Planners/Edit/5
+        // POST: CreateEvents/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FirstName,LastName,EmailAddress,Budget,ApplicationUserId")] Planner planner)
+        public ActionResult Edit([Bind(Include = "EventsName,City,DateOfEvent,NumberOfMembers,TheBudgetOfEvent,ApplicationUserId")] CreateEvent createEvent)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(planner).State = EntityState.Modified;
+                db.Entry(createEvent).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", "Planners");
+                return RedirectToAction("Index");
             }
-            return View(planner);
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", createEvent.PlannerId);
+            return View(createEvent);
         }
 
-        // GET: Planners/Delete/5
+        // GET: CreateEvents/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Planner planner = db.Planners.Find(id);
-            if (planner == null)
+            CreateEvent createEvent = db.CreateEvents.Find(id);
+            if (createEvent == null)
             {
                 return HttpNotFound();
             }
-            return View(planner);
+            return View(createEvent);
         }
 
-        // POST: Planners/Delete/5
+        // POST: CreateEvents/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Planner planner = db.Planners.Find(id);
-            db.Planners.Remove(planner);
+            CreateEvent createEvent = db.CreateEvents.Find(id);
+            db.CreateEvents.Remove(createEvent);
             db.SaveChanges();
-            return RedirectToAction("Index", "Planners");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -124,6 +130,5 @@ namespace BudgetingApp.Controllers
             }
             base.Dispose(disposing);
         }
-
-    }   
+    }
 }

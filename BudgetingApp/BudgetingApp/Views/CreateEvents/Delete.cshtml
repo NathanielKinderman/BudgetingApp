@@ -1,0 +1,64 @@
+﻿@model BudgetingApp.Models.CreateEvent
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CreateEvent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Planner.EmailAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Planner.EmailAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfEvent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfEvent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfMembers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfMembers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TheBudgetOfEvent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TheBudgetOfEvent)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

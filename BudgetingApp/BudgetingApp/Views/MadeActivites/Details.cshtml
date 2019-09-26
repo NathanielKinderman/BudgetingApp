@@ -1,0 +1,50 @@
+﻿@model BudgetingApp.Models.MadeActivites
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MadeActivites</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationOfActivity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationOfActivity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeOfActivity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeOfActivity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HowManyMembersInvolved)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HowManyMembersInvolved)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstimatedCostOfActivity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstimatedCostOfActivity)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.NameOfActivity }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

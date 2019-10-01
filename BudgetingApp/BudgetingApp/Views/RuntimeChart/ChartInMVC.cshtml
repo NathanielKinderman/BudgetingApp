@@ -1,0 +1,329 @@
+﻿@{
+    ViewBag.Title = "ChartInMVC";
+}
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+<style type="text/css">
+    label {
+        font-weight: normal;
+        font-size: 11px;
+        vertical-align: middle;
+    }
+
+    body {
+        color: black;
+    }
+
+    textbox {
+        font-weight: normal;
+        font-size: 11px;
+        vertical-align: middle;
+        color: black;
+    }
+
+    .form-control, select {
+        font-weight: normal;
+        font-size: 11px;
+    }
+
+    .container {
+        width: 80%;
+        margin: 15px auto;
+        color: black;
+    }
+</style>
+
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="col-md-8">
+                                        <label class="control-label">Enter Your Expenses Below</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">
+                                                        <label class="control-label">Education</label>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <label class="control-label">Lodging</label>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <label class="control-label">Fooding</label>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <label class="control-label">Travelling</label>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <label class="control-label">Communication</label>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <label class="control-label">Others</label>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">
+                                                        <input type="text" class="form-control" id="txtEducation" />
+                                                    </th>
+                                                    <th scope="row">
+                                                        <input type="text" class="form-control" id="txtLodging" />
+                                                    </th>
+                                                    <th scope="row">
+                                                        <input type="text" class="form-control" id="txtFooding" />
+                                                    </th>
+                                                    <th scope="row">
+                                                        <input type="text" class="form-control" id="txtTravelling" />
+                                                    </th>
+                                                    <th scope="row">
+                                                        <input type="text" class="form-control" id="txtCommunication" />
+                                                    </th>
+                                                    <th scope="row">
+                                                        <input type="text" class="form-control" id="txtOthers" />
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" colspan="2">
+                                                        <div id="chartContainerPie" class="containerPie">
+                                                            <canvas id="myChart"> </canvas>
+                                                        </div>
+                                                    </th>
+                                                    <th scope="row" colspan="2">
+                                                        <div id="chartContainer" class="container">
+                                                            <canvas id="myChartPie"> </canvas>
+                                                        </div>
+                                                    </th>
+                                                    <th scope="row" colspan="2">
+                                                        <div id="chartContainerLine" class="containerLine">
+                                                            <canvas id="myChartLine"> </canvas>
+                                                        </div>
+                                                    </th>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+ function GenerateRuntimeGraph() {
+        var educationValue = $('#txtEducation').val();
+        var lodgingValue = $('#txtLodging').val();
+        var foodingValue = $('#txtFooding').val();
+        var travellingValue = $('#txtTravelling').val();
+        var communicationValue = $('#txtCommunication').val();
+        var othersValue = $('#txtOthers').val();
+
+        //setting default values
+        if (educationValue == "") {
+            educationValue = 0;
+        }
+        if (lodgingValue == "") {
+            lodgingValue = 0;
+        }
+        if (foodingValue == "") {
+            foodingValue = 0;
+        }
+        if (travellingValue == "") {
+            travellingValue = 0;
+        }
+        if (communicationValue == "") {
+            communicationValue = 0;
+        }
+        if (othersValue == "") {
+            othersValue = 0;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("NewChart", "ChartInMVCRuntime")',
+            data: JSON.stringify({
+                "strEducation": "Education",
+                "strLodging": "Lodging",
+                "strFooding": "Fooding",
+                "strTravelling": "Travelling",
+                "strCommunication": "Communication",
+                "strOthers": "Others",
+                educationValue: educationValue,
+                lodgingValue: lodgingValue,
+                foodingValue: foodingValue,
+                travellingValue: travellingValue,
+                communicationValue: communicationValue,
+                othersValue: othersValue
+            }),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (chData) {
+                var aData = chData;
+                var aLabels = aData[0];
+                var aDatasets1 = aData[1];
+
+                //For Bar Chart
+                var ctx = document.getElementById("myChart").getContext('2d');
+                ctx.height = 300;
+                ctx.width = 300;
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    height: "230px",
+                    width: "300px",
+                    autoSkip: false,
+                    responsive: true,
+                    animation: false,
+                    showDatapoints: true,
+                    maintainAspectRatio: false,
+                    legend: { position: 'bottom' },
+                    data: {
+                        //labels: ["M", "T", "W", "T", "F", "S", "S"],
+                        labels: ["Education", "Lodging", "Fooding", "Travelling", "Communication", "Others"],
+                        datasets: [{
+                            label: 'Monthly Expenses',
+                            data: [educationValue, lodgingValue, foodingValue, travellingValue, communicationValue, othersValue],
+                            backgroundColor: ["red", "blue", "green", "yellow", "pink", "brown"]
+                        }]
+                    }, options: {
+                        events: ['click'],
+                        scaleShowValues: true,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    autoSkip: false
+                                }
+                            }]
+                        }
+                    }
+                });
+
+
+                //For Pie Chart
+                var ctx1 = document.getElementById("myChartPie").getContext('2d');
+                ctx1.height = 300;
+                ctx1.width = 300;
+                var myChart = new Chart(ctx1, {
+                    type: 'pie',
+                    height: "230px",
+                    width: "300px",
+                    responsive: true,
+                    animation: false,
+                    maintainAspectRatio: false,
+                    legend: { position: 'bottom' },
+                    data: {
+                        //labels: ["M", "T", "W", "T", "F", "S", "S"],
+                        labels: ["Education", "Lodging", "Fooding", "Travelling", "Communication", "Others"],
+                        datasets: [{
+                            label: 'Monthly Expenses',
+                            data: [educationValue, lodgingValue, foodingValue, travellingValue, communicationValue, othersValue],
+                            backgroundColor: ["red", "blue", "green", "yellow", "pink", "brown"]
+                        }]
+                    }, options: {
+                        // This chart will not respond to mousemove, etc
+                        events: ['click']
+                    }
+                });
+
+                //For Line Chart
+                var ctx = document.getElementById("myChartLine").getContext('2d');
+                ctx.height = 300;
+                ctx.width = 300;
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    height: "230px",
+                    width: "300px",
+                    responsive: true,
+                    animation: false,
+                    maintainAspectRatio: false,
+                    legend: { position: 'bottom' },
+                    data: {
+                        //labels: ["M", "T", "W", "T", "F", "S", "S"],
+                        labels: ["Education", "Lodging", "Fooding", "Travelling", "Communication", "Others"],
+                        datasets: [{
+                            label: 'Monthly Expenses',
+                            data: [educationValue, lodgingValue, foodingValue, travellingValue, communicationValue, othersValue],
+                            backgroundColor: "rgb(66, 134, 244)"
+                        }]
+                    }, options: {
+                        events: ['click'],
+                        scaleShowValues: true,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    autoSkip: false
+                                }
+                            }]
+                        }
+                    }
+                });
+
+
+            },
+            "error": function (data) {
+                alert("Some Error Occured!");
+            }
+        });
+    }
+        $("#txtEducation").keyup(function () {
+            GenerateRuntimeGraph();
+        });
+
+        $("#txtLodging").keyup(function () {
+            GenerateRuntimeGraph();
+        });
+
+        $("#txtFooding").keyup(function () {
+            GenerateRuntimeGraph();
+        });
+
+        $("#txtTravelling").keyup(function () {
+            GenerateRuntimeGraph();
+        });
+
+        $("#txtCommunication").keyup(function () {
+            GenerateRuntimeGraph();
+        });
+
+        $("#txtOthers").keyup(function () {
+            GenerateRuntimeGraph();
+        });
+</script>
+
+
+
+
+
+

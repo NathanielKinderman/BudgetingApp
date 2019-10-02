@@ -7,6 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BudgetingApp.Models;
+using BudgetingApp.Views;
+using XamarinForms.Services;
+using XamarinForms.ViewModels;
+using Image = Xamarin.Forms.Image;
+using Label = Xamarin.Forms.Label;
+using ListView = Xamarin.Forms.ListView;
 
 namespace BudgetingApp.Controllers
 {
@@ -39,6 +45,7 @@ namespace BudgetingApp.Controllers
         public ActionResult Create()
         {
             MadeActivites madeActivites = new MadeActivites();
+            
             return View();
         }
 
@@ -114,7 +121,7 @@ namespace BudgetingApp.Controllers
             db.MadeActivites.Remove(madeActivites);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
+        } 
 
         protected override void Dispose(bool disposing)
         {
@@ -123,6 +130,27 @@ namespace BudgetingApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public ActionResult eventBrite()
+        {
+            EventbriteService eventbriteService = new EventbriteService();
+            return View(eventbriteService);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult eventBrite(EventbriteService eventbriteService)
+        {
+
+            if (ModelState.IsValid)
+            {
+                //db.MadeActivites.Add(eventBrite);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View();
+
+
         }
     }
 }

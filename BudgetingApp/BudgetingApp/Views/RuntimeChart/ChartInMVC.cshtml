@@ -58,6 +58,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <div class="col-md-12">
+                                        <div>
                                         <table class="table table-bordered table-responsive">
                                             <thead>
                                                 <tr>
@@ -101,9 +102,10 @@
                                                     <th scope="row">
                                                         <input type="text" class="form-control" id="txtOthers" />
                                                     </th>
-                                                </tr>
+                                                </tr>                                                 
                                                 <tr>
-                                                    <th scope="row" colspan="2">
+                                                    
+                                                    <th scope="row" colspan="2">                                                        
                                                         <div id="chartContainerPie" class="containerPie">
                                                             <canvas id="myChart"> </canvas>
                                                         </div>
@@ -117,11 +119,14 @@
                                                         <div id="chartContainerLine" class="containerLine">
                                                             <canvas id="myChartLine"> </canvas>
                                                         </div>
+
                                                     </th>
+                                                    
                                                 </tr>
 
                                             </tbody>
                                         </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -185,16 +190,27 @@
                 var aLabels = aData[0];
                 var aDatasets1 = aData[1];
 
+
+                 
+
                 //For Bar Chart
                 var ctx = document.getElementById("myChart").getContext('2d');
                 ctx.height = 300;
                 ctx.width = 300;
+                ctx.minheight = 280;
+                ctx.minwidth = 280;
+                ctx.maxheight = 600;
+                ctx.maxwidth = 1200;
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     height: "230px",
                     width: "300px",
+                    minheight: "280px",
+                    minwidth: "280px",
+                    maxheight: "600px",
+                    maxwidth:"1200px",
                     autoSkip: false,
-                    responsive: true,
+                    responsive: false,
                     animation: false,
                     showDatapoints: true,
                     maintainAspectRatio: false,
@@ -230,11 +246,19 @@
                 var ctx1 = document.getElementById("myChartPie").getContext('2d');
                 ctx1.height = 300;
                 ctx1.width = 300;
+                ctx1.minheight = 280;
+                ctx1.minwidth = 280;
+                ctx1.maxheight = 600;
+                ctx1.maxwidth = 1200;
                 var myChart = new Chart(ctx1, {
                     type: 'pie',
                     height: "230px",
                     width: "300px",
-                    responsive: true,
+                    minheight: "280px",
+                    minwidth: "280px",
+                    maxheight: "600px",
+                    maxwidth: "1200px",
+                    responsive: false,
                     animation: false,
                     maintainAspectRatio: false,
                     legend: { position: 'bottom' },
@@ -256,11 +280,19 @@
                 var ctx = document.getElementById("myChartLine").getContext('2d');
                 ctx.height = 300;
                 ctx.width = 300;
+                ctx.minheight = 280;
+                ctx.minwidth = 280;
+                ctx.maxheight = 600;
+                ctx.maxwidth = 1200;
                 var myChart = new Chart(ctx, {
                     type: 'line',
                     height: "230px",
                     width: "300px",
-                    responsive: true,
+                    minheight: "280px",
+                    minwidth: "280px",
+                    maxheight: "600px",
+                    maxwidth: "1200px",
+                    responsive: false,
                     animation: false,
                     maintainAspectRatio: false,
                     legend: { position: 'bottom' },

@@ -201,7 +201,10 @@
                 ctx.minwidth = 280;
                 ctx.maxheight = 600;
                 ctx.maxwidth = 1200;
+
                 var myChart = new Chart(ctx, {
+                    myChart.destroy(),
+                    myChart.create(),                    
                     type: 'bar',
                     height: "230px",
                     width: "300px",
@@ -214,7 +217,7 @@
                     animation: false,
                     showDatapoints: true,
                     maintainAspectRatio: false,
-                    legend: { position: 'bottom' },
+                    legend: { position: 'bottom' },                    
                     data: {
                         //labels: ["M", "T", "W", "T", "F", "S", "S"],
                         labels: ["Education", "Lodging", "Fooding", "Travelling", "Communication", "Others"],
@@ -223,7 +226,7 @@
                             data: [educationValue, lodgingValue, foodingValue, travellingValue, communicationValue, othersValue],
                             backgroundColor: ["red", "blue", "green", "yellow", "pink", "brown"]
                         }]
-                    }, options: {
+                    }, options: {                        
                         events: ['click'],
                         scaleShowValues: true,
                         scales: {
@@ -238,8 +241,11 @@
                                 }
                             }]
                         }
+                        
                     }
+
                 });
+                
 
 
                 //For Pie Chart
@@ -250,7 +256,7 @@
                 ctx1.minwidth = 280;
                 ctx1.maxheight = 600;
                 ctx1.maxwidth = 1200;
-                var myChart = new Chart(ctx1, {
+                var myChart = new Chart(ctx1, {                    
                     type: 'pie',
                     height: "230px",
                     width: "300px",
@@ -284,7 +290,7 @@
                 ctx.minwidth = 280;
                 ctx.maxheight = 600;
                 ctx.maxwidth = 1200;
-                var myChart = new Chart(ctx, {
+                var myChart = new Chart(ctx, {                    
                     type: 'line',
                     height: "230px",
                     width: "300px",
@@ -351,7 +357,7 @@
 
         $("#txtOthers").keyup(function () {
             GenerateRuntimeGraph();
-        });
+        });        
 </script>
 
 

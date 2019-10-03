@@ -28,11 +28,10 @@ namespace XamarinForms.ViewModels
         }
 
         private async Task DownloadDataAsync()
-        {
-            
+        {     
             var eventbriteService = new EventbriteService();
 
-            EventbriteEvents = await eventbriteService.GetEventsAsync();
+            EventbriteEvents = await eventbriteService.GetEventsAsync("Milwaukee");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

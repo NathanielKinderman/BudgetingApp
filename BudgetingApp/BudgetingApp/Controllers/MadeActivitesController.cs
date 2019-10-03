@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BudgetingApp.Models;
@@ -131,25 +132,12 @@ namespace BudgetingApp.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult eventBrite()
+        public ActionResult CreateEventBrite()
         {
-            EventbriteService eventbriteService = new EventbriteService();
-            return View(eventbriteService);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult eventBrite(EventbriteService eventbriteService)
-        {
-
-            if (ModelState.IsValid)
-            {
-                //db.MadeActivites.Add(eventBrite);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View();
-
+            //EventbriteService eventbriteService = new EventbriteService();
+            //await eventbriteService.GetEventsAsync("Milwaukee");
+            //int x = 0;
+                return View("eventBrite");
 
         }
     }

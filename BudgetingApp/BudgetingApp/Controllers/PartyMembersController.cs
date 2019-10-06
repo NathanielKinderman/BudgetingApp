@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BudgetingApp.Models;
+using Microsoft.AspNet.Identity;
 
 namespace BudgetingApp.Controllers
 {
@@ -22,7 +23,7 @@ namespace BudgetingApp.Controllers
         }
 
         // GET: PartyMembers/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             if (id == null)
             {
@@ -52,6 +53,8 @@ namespace BudgetingApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var currentUserId = User.Identity.GetUserId();
+                partyMember.ApplicationUserId = currentUserId;
                 db.PartyMembers.Add(partyMember);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -61,7 +64,7 @@ namespace BudgetingApp.Controllers
         }
 
         // GET: PartyMembers/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {
@@ -92,7 +95,7 @@ namespace BudgetingApp.Controllers
         }
 
         // GET: PartyMembers/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
@@ -109,7 +112,7 @@ namespace BudgetingApp.Controllers
         // POST: PartyMembers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             PartyMember partyMember = db.PartyMembers.Find(id);
             db.PartyMembers.Remove(partyMember);

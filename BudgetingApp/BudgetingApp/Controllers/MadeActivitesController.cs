@@ -4,11 +4,14 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BudgetingApp.Models;
 using BudgetingApp.Views;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using XamarinForms.Services;
 using XamarinForms.ViewModels;
 using Image = Xamarin.Forms.Image;
@@ -55,10 +58,19 @@ namespace BudgetingApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NameOfActivity,LocationOfActivity,TimeOfActivity,HowManyMembersInvolved,EstimatedCostOfActivity")] MadeActivites madeActivites)
+        public async Task<ActionResult> Create([Bind(Include = "NameOfActivity,LocationOfActivity,Latitude,Longitude,City,State,TimeOfActivity,HowManyMembersInvolved,EstimatedCostOfActivity")] MadeActivites madeActivites)
         {
             if (ModelState.IsValid)
             {
+                string apiCall = "https://maps.googleapis.com/maps/api/geocode/json?address=" + AddPluses(madeActivites.LocationOfActivity) + ",+" + AddPluses(madeActivites.City) + ",+" + AddPluses(madeActivites.State) + "&key=AIzaSyBeWLVk14n3OzLLKLvDvUyWspH929EcEaY";
+                HttpClient client = new HttpClient();
+                //make a request for api call set up base address url 
+                client.BaseAddress = new Uri(apiCall);
+                HttpResponseMessage response = await client.GetAsync(apiCall);
+                LocationInfo location = JsonConvert.DeserializeObject<LocationInfo>(await response.Content.ReadAsStringAsync());
+                madeActivites.Latitude = location.Results[0].Geometry.Location.Lat.ToString();
+                madeActivites.Longitude = location.Results[0].Geometry.Location.Lng.ToString();
+
                 db.MadeActivites.Add(madeActivites);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -66,6 +78,21 @@ namespace BudgetingApp.Controllers
 
             return View(madeActivites);
         }
+
+        public string AddPluses(string str)
+        {
+            str = str.Replace(" ", "+");
+            return str;
+        }
+
+        public string AddCommas(string str)
+        {
+            str = str.Replace(str, ",");
+            return str;
+
+        }
+
+
 
         // GET: MadeActivites/Edit/5
         public ActionResult Edit(string id)
@@ -87,7 +114,7 @@ namespace BudgetingApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NameOfActivity,LocationOfActivity,TimeOfActivity,HowManyMembersInvolved,EstimatedCostOfActivity")] MadeActivites madeActivites)
+        public ActionResult Edit([Bind(Include = "NameOfActivity,LocationOfActivity,Latitude,Longitude,City,State,TimeOfActivity,HowManyMembersInvolved,EstimatedCostOfActivity")] MadeActivites madeActivites)
         {
             if (ModelState.IsValid)
             {
@@ -139,6 +166,10 @@ namespace BudgetingApp.Controllers
             //int x = 0;
                 return View("eventBrite");
 
+        }
+         public ActionResult Map()
+        {
+            return View();
         }
     }
 }

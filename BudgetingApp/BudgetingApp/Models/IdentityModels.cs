@@ -39,5 +39,7 @@ namespace BudgetingApp.Models
         public System.Data.Entity.DbSet<BudgetingApp.Models.MadeActivites> MadeActivites { get; set; }
 
         public System.Data.Entity.DbSet<BudgetingApp.Models.CreateEvent> CreateEvents { get; set; }
+
+        public System.Data.Entity.DbSet<BudgetingApp.Models.Data> Data { get; set; }
     }
 }

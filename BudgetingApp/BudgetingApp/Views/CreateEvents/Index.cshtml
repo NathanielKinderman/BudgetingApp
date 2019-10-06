@@ -47,9 +47,9 @@
             @Html.DisplayFor(modelItem => item.TheBudgetOfEvent)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EventsName }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EventsName }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EventsName })
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Edit", "MadeActivites") |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
         </td>
     </tr>
 }

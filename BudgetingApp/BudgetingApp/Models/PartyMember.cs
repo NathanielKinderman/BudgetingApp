@@ -10,6 +10,8 @@ namespace BudgetingApp.Models
     public class PartyMember
     {
         [Key]
+        public int id { get; set; }
+
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
         [Display(Name = "Last Name")]

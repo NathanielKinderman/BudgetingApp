@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BudgetingApp.Models;
+using Microsoft.AspNet.Identity;
 
 namespace BudgetingApp.Controllers
 {
@@ -21,7 +22,7 @@ namespace BudgetingApp.Controllers
         }
 
         // GET: Planners/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             if (id == null)
             {
@@ -51,6 +52,8 @@ namespace BudgetingApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var currentUserId = User.Identity.GetUserId();
+                planner.ApplicationUserId = currentUserId;
                 db.Planners.Add(planner);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -59,8 +62,9 @@ namespace BudgetingApp.Controllers
             return View(planner);
         }
 
+
         // GET: Planners/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {
@@ -91,7 +95,7 @@ namespace BudgetingApp.Controllers
         }
 
         // GET: Planners/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
@@ -108,7 +112,7 @@ namespace BudgetingApp.Controllers
         // POST: Planners/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Planner planner = db.Planners.Find(id);
             db.Planners.Remove(planner);

@@ -7,13 +7,13 @@ namespace BudgetingApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class eventbrite : IMigrationMetadata
+    public sealed partial class updatedEventAndActivitiesModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(eventbrite));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(updatedEventAndActivitiesModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "201910021822319_eventbrite"; }
+            get { return "201910042144213_updatedEventAndActivitiesModel"; }
         }
         
         string IMigrationMetadata.Source
